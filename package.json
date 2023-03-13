@@ -1,0 +1,29 @@
+{
+  "name": "adventjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "standard": "^17.0.0",
+    "vitest": "0.28.5"
+  },
+  "eslintConfig": {
+    "env": {
+      "es2017": true
+    },
+    "extends": "./node_modules/standard/eslintrc.json",
+    "rules": {
+      "space-before-function-paren": "off",
+      "comma-dangle": "off",
+      "max-len": ["error", { "code": 150 }]
+    }
+  }
+}
