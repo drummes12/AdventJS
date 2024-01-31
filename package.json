@@ -23,7 +23,12 @@
     "rules": {
       "space-before-function-paren": "off",
       "comma-dangle": "off",
-      "max-len": ["error", { "code": 150 }]
+      "max-len": [
+        "error",
+        {
+          "code": 150
+        }
+      ]
     }
   }
 }
