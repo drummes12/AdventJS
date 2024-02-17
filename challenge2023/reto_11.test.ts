@@ -9,7 +9,7 @@ function getIndexsForPalindrome (word: string): number[] | null {
   let palindrome: number[] | null = []
 
   let isReversed = false
-  for (let pos = 0; pos < wordLength; pos++) {
+  for (let pos = 0; pos < wordLength / 2; pos++) {
     const letter = wordSplit[pos]
     const letterReversed = wordReversed[pos]
 
@@ -17,23 +17,21 @@ function getIndexsForPalindrome (word: string): number[] | null {
       continue
     }
 
-    const change = wordSplit.slice(pos).findIndex((l) => l === letterReversed) + pos
-    console.debug('🚀 ~ letterReversed:', letterReversed)
-    console.debug('🚀 ~ pos:', pos)
-    console.debug('🚀 ~ change:', change)
-    const letterChange1 = wordSplit[pos]
-    const letterChange2 = wordSplit[change]
-    wordSplit[pos] = letterChange2
-    wordSplit[change] = letterChange1
+    const restWord = wordSplit.slice(pos + 1)
+    const change = restWord.findIndex((l) => l === letterReversed) + pos + 1
+
+    const letterChange = wordSplit[pos]
+    wordSplit[pos] = wordSplit[change]
+    wordSplit[change] = letterChange
     wordReversed = [...wordSplit].reverse()
-    palindrome.push(pos, change)
-    pos = 0
+
+    palindrome = [pos, change]
     isReversed = true
     break
   }
 
   if (isReversed) {
-    for (let pos = 0; pos < wordLength; pos++) {
+    for (let pos = 0; pos < wordLength / 2; pos++) {
       const letter = wordSplit[pos]
       const letterReversed = wordReversed[pos]
 
