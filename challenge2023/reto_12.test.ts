@@ -1,35 +1,20 @@
 import { describe, it, expect } from 'vitest'
 
 function checkIsValidCopy (original: string, copy: string) {
-  const orderDegrad = ['#', '\\+', ':', '\\.', '\\s']
+  const orderDegrad = ['#', '+', ':', '.', ' ']
 
   for (let pos = 0; pos < original.length; pos++) {
-    const regexLetters = /[a-zA-Z]+/g
-    let regexDegrad = new RegExp(`(${orderDegrad.join('|')})+`)
-
     const originalLetter = original[pos]
     const copyLetter = copy[pos]
 
     if (originalLetter === ' ' && copyLetter !== ' ') return false
+    if (originalLetter === copyLetter) continue
+    if (copyLetter === originalLetter.toLowerCase()) continue
 
-    let canDegraded = regexLetters.test(originalLetter)
+    const levelDegraded = orderDegrad.indexOf(originalLetter) + 1
+    const degraded = orderDegrad.slice(levelDegraded)
 
-    const alreadyDegraded = regexDegrad.test(originalLetter)
-
-    if (alreadyDegraded) {
-      const levelDegraded = orderDegrad.indexOf(originalLetter)
-      const regex = orderDegrad.slice(levelDegraded).join('|')
-      regexDegrad = new RegExp(`(${regex})+`)
-      canDegraded = true
-    }
-
-    if (canDegraded) {
-      const isOriginal = copyLetter === originalLetter
-      const isLetterDegraded = copyLetter === originalLetter.toLowerCase()
-      const isDegraded = regexDegrad.test(copyLetter)
-
-      if (!isOriginal && !isLetterDegraded && !isDegraded) return false
-    }
+    if (!degraded.includes(copyLetter)) return false
   }
   return true
 }
